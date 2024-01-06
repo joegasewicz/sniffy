@@ -1,0 +1,25 @@
+{{>layout/header}}
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">App Name</th>
+            <th scope="col">URL</th>
+            <th scope="col">Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#applications}}
+            <tr>
+                <th scope="row">{{id}}</th>
+                <th scope="row">{{name}}</th>
+                <th scope="row">{{url}}</th>
+                <th scope="row">{{type}}</th>
+            </tr>
+        {{/applications}}
+        </tbody>
+
+    </table>
+</div>
+{{>layout/footer}}

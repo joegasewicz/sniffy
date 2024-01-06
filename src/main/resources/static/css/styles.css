@@ -1,0 +1,57 @@
+body {
+    overflow-x: hidden;
+}
+.wrapper {
+    padding-top: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 300px;
+}
+
+.sidebar {
+    width: 300px;
+    position: fixed;
+    height: 100%;
+    background: #2c3e50;
+    color: #ffffff;
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar > h1 {
+    margin-bottom: 40px;
+}
+
+.sidebar > ul {
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar li {
+   list-style: none;
+    margin-bottom: 20px;
+}
+
+.sidebar li > a {
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar li > a:hover {
+    color: #3498db;
+}
+/* Forms */
+form {
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+form > button {
+    margin-top: 20px;
+    width: 100%;
+}
+.form-control {
+    margin-bottom: 20px;
+}

@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  postgres_sniffydb:
+    image: "postgres:latest"
+    ports:
+      - "5432:5432"
+    env_file:
+      - ".env-dev"
+    volumes:
+      - ./sniffydb_vol/:/var/lib/postgresql/data
+volumes:
+  sniffydb_vol:
