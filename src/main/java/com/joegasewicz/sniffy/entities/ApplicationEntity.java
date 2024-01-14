@@ -17,12 +17,13 @@ public class ApplicationEntity {
     private String type;
     private String url;
     private String status;
-    private int pollRate;
+    private Integer pollRate;
     private String pollStatus;
 
     @OneToMany(
         cascade = CascadeType.ALL,
-        orphanRemoval = true
+        orphanRemoval = true,
+        fetch = FetchType.EAGER
     )
     private List<RequestEntity> requestEntities = new ArrayList<>();
 
@@ -33,7 +34,7 @@ public class ApplicationEntity {
     private LocalDateTime updatedAt;
 
 
-    public ApplicationEntity(String name, String type, String url, String status, int pollRate, String pollStatus) {
+    public ApplicationEntity(String name, String type, String url, String status, Integer pollRate, String pollStatus) {
         this.name = name;
         this.type = type;
         this.url = url;
@@ -86,11 +87,11 @@ public class ApplicationEntity {
         this.status = status;
     }
 
-    public int getPollRate() {
+    public Integer getPollRate() {
         return pollRate;
     }
 
-    public void setPollRate(int pollRate) {
+    public void setPollRate(Integer pollRate) {
         this.pollRate = pollRate;
     }
 

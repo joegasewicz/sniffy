@@ -38,10 +38,10 @@
                     <th scope="row"></th>
                 </tr>
                 <tr>
-                    <th scope="row">Pole Status</th>
+                    <th scope="row">poll Status</th>
                     <th scope="row">
-                        {{#poleStatusRunning}}🟢 Running{{/poleStatusRunning}}
-                        {{^poleStatusRunning}}🔴 Stopped{{/poleStatusRunning}}
+                        {{#pollStatusRunning}}🟢 Running{{/pollStatusRunning}}
+                        {{^pollStatusRunning}}🔴 Stopped{{/pollStatusRunning}}
                     </th>
                     <th scope="row">
                         <form action="/applications/start-polling/{{ app.id }}" method="post">
@@ -50,13 +50,13 @@
                     </th>
                 </tr>
                 <tr>
-                    <th scope="row">Pole Rate</th>
+                    <th scope="row">poll Rate</th>
                     <th scope="row">
-                        {{ poleRateTime }}
+                        {{ pollRateTime }}
                     </th>
                     <th scope="row">
-                        <form class="form-flex" action="/applications/update-pole-duration/{{ app.id }}" method="post">
-                            <select class="form-select" name="poleRate" aria-label="Default select example">
+                        <form class="form-flex" action="/applications/update-poll-duration/{{ app.id }}" method="post">
+                            <select class="form-select" name="pollRate" aria-label="Default select example">
                                 <option value="1">1 min</option>
                                 <option value="60">1 hr</option>
                                 <option value="1440">24 hrs</option>

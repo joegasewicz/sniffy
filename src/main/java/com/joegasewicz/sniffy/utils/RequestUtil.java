@@ -1,35 +1,47 @@
 package com.joegasewicz.sniffy.utils;
 
 import com.joegasewicz.sniffy.entities.ApplicationEntity;
+import com.joegasewicz.sniffy.entities.RequestEntity;
 import com.joegasewicz.sniffy.services.ApplicationService;
 import com.joegasewicz.sniffy.services.RequestService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
+@Service
 public class RequestUtil {
 
     private WebClient webClient;
     private long appId;
     private String uri;
-    private int poleInterval;
     private ApplicationService applicationService;
     private RequestService requestService;
+
     private LogUtil logUtil;
     private int statusCode;
     private String statusPhrase;
 
-    public RequestUtil(RequestService requestService, LogUtil logUtil, int poleInterval) {
+    public RequestUtil(ApplicationService applicationService, RequestService requestService, LogUtil logUtil) {
+        this.applicationService = applicationService;
         this.requestService = requestService;
         this.logUtil = logUtil;
-        this.poleInterval = poleInterval;
         webClient = WebClient.builder().baseUrl("").build();
     }
 
+    @Transactional
     public void poll() {
+        ApplicationEntity applicationEntity;
         while(true) {
-            // check if we still wantr to poll
-            ApplicationEntity applicationEntity = applicationService.get(appId);
-            if (applicationEntity == null) {
+            // check if we still want to poll
+            try {
+                applicationEntity = applicationService.get(appId);
+            } catch (Exception err) {
+                err.getStackTrace();
+                break;
+            }
+
+            if (applicationEntity == null || applicationEntity.getPollRate() == null) {
                 System.out.println("Error: No Application Entity!"); // TODO throw
                 break;
             }
@@ -53,16 +65,16 @@ public class RequestUtil {
                 logString = logUtil.ok(statusCode, statusPhrase, appId);
             }
             // save the status to the db with the appId date and time
-            requestService.create(logString, statusCode, statusPhrase, appId);
+            RequestEntity newRequestEntity = requestService.create(logString, statusCode, statusPhrase, appId);
+            applicationService.saveRequestEntities(appId, newRequestEntity);
             // async wait for poleRate minutes
             try {
-                Thread.sleep(poleInterval);
+                Thread.sleep(applicationEntity.getPollRate() * 60 * 100);
             } catch (InterruptedException err) {
                 System.out.println(err.getMessage());
                 break;
             }
         }
-       // continue in while loop
     }
 
     public void setAppId(long appId) {

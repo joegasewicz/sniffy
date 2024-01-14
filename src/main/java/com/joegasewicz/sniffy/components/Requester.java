@@ -1,25 +1,34 @@
 package com.joegasewicz.sniffy.components;
 
+import com.joegasewicz.sniffy.services.ApplicationService;
+import com.joegasewicz.sniffy.services.RequestService;
+import com.joegasewicz.sniffy.utils.LogUtil;
 import com.joegasewicz.sniffy.utils.RequestUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class Requester {
+    private RequestUtil requestUtil;
+    private ApplicationService applicationService;
+    private RequestService requestService;
 
-    private RequestUtil requestService;
-
-    public Requester() {
-      //  this.requestService = new RequestUtil();
+    public Requester(ApplicationService applicationService, RequestService requestService) {
+        this.applicationService = applicationService;
+        this.requestService = requestService;
     }
 
     @Async
-    public void get(long appId, String uri) {
+    @Transactional
+    public void get(long appId, String uri, int pollRate) {
         try {
-            long threadID = Thread.currentThread().getId();
-            requestService.setAppId(appId);
-            requestService.setUri(uri);
-            requestService.poll();
+            this.requestUtil = new RequestUtil(applicationService, requestService, new LogUtil());
+            long threadID = Thread.currentThread().getId(); // TODO
+            requestUtil.setAppId(appId);
+            requestUtil.setUri(uri);
+            requestUtil.poll();
         } catch (Exception e) {
             e.printStackTrace();
         }
