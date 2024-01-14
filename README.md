@@ -1,8 +1,8 @@
 # Sniffy
-Sniffs REST & Web apps - WIP
+Sniffs REST & Web apps - *WIP*
 
 ### Docker
-The best way to run Sniffy is to with docker.
+The best way to run Sniffy is with docker.
 
 
 ### Screen shots
