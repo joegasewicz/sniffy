@@ -32,16 +32,16 @@ public class ApplicationController {
         return "redirect:/applications/new?app_created=true";
     }
 
-    @PostMapping("/applications/update-pole-duration/{appId}")
+    @PostMapping("/applications/update-poll-duration/{appId}")
     public String postUpdatePolling(@PathVariable long appId, @ModelAttribute ApplicationEntity applicationEntity) {
-        applicationService.updatePoleStatus(appId, applicationEntity.getPollRate());
+        applicationService.updatePollStatus(appId, applicationEntity.getPollRate());
         return "redirect:/applications/" + appId;
     }
 
     @PostMapping("/applications/start-polling/{appId}")
     public String postStartPolling(@PathVariable long appId) {
         ApplicationEntity applicationEntity = applicationService.get(appId);
-        requester.get(appId, applicationEntity.getUrl());
+        requester.get(appId, applicationEntity.getUrl(), applicationEntity.getPollRate());
         return "redirect:/applications/" + appId;
     }
 
@@ -49,16 +49,19 @@ public class ApplicationController {
     public String getApp(@PathVariable long appId, Model model) {
         ApplicationEntity app = applicationService.get(appId);
         model.addAttribute("app", app);
-        if (app.getPollStatus().equalsIgnoreCase("running")) {
-            model.addAttribute("poleStatusRunning", true);
+        if (app.getPollStatus() != null && app.getPollStatus().equalsIgnoreCase("running")) {
+            model.addAttribute("pollStatusRunning", true);
         }
         if(app.getStatus().equalsIgnoreCase("running")) {
             model.addAttribute("statusRunning", true);
         }
-        switch (app.getPollRate()) {
-           case 1 -> model.addAttribute("poleRateTime", "Every 60 seconds");
-           case 60 -> model.addAttribute("poleRateTime", "Once per hour");
-           case 24 * 60 -> model.addAttribute("poleRateTime", "Once every 24 hours");
+        if (app.getPollStatus() != null) {
+            switch (app.getPollRate()) {
+                case 0 -> model.addAttribute("pollRateTime", "-");
+                case 1 -> model.addAttribute("pollRateTime", "Every 60 seconds");
+                case 60 -> model.addAttribute("pollRateTime", "Once per hour");
+                case 24 * 60 -> model.addAttribute("pollRateTime", "Once every 24 hours");
+            }
         }
         return "applications";
     }
