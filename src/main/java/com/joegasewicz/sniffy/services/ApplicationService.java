@@ -29,7 +29,7 @@ public class ApplicationService {
 
     public void updatePoleStatus(long appId, int poleRate) {
         ApplicationEntity applicationEntity = applicationRepository.getReferenceById(appId);
-        applicationEntity.setPoleRate(poleRate);
+        applicationEntity.setPollRate(poleRate);
         applicationRepository.save(applicationEntity);
     }
 }

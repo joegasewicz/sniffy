@@ -34,7 +34,7 @@ public class ApplicationController {
 
     @PostMapping("/applications/update-pole-duration/{appId}")
     public String postUpdatePolling(@PathVariable long appId, @ModelAttribute ApplicationEntity applicationEntity) {
-        applicationService.updatePoleStatus(appId, applicationEntity.getPoleRate());
+        applicationService.updatePoleStatus(appId, applicationEntity.getPollRate());
         return "redirect:/applications/" + appId;
     }
 
@@ -49,13 +49,13 @@ public class ApplicationController {
     public String getApp(@PathVariable long appId, Model model) {
         ApplicationEntity app = applicationService.get(appId);
         model.addAttribute("app", app);
-        if (app.getPoleStatus().equalsIgnoreCase("running")) {
+        if (app.getPollStatus().equalsIgnoreCase("running")) {
             model.addAttribute("poleStatusRunning", true);
         }
         if(app.getStatus().equalsIgnoreCase("running")) {
             model.addAttribute("statusRunning", true);
         }
-        switch (app.getPoleRate()) {
+        switch (app.getPollRate()) {
            case 1 -> model.addAttribute("poleRateTime", "Every 60 seconds");
            case 60 -> model.addAttribute("poleRateTime", "Once per hour");
            case 24 * 60 -> model.addAttribute("poleRateTime", "Once every 24 hours");

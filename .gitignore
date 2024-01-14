@@ -1,5 +1,7 @@
 .idea/
 sniffydb_vol
+.jpb
+
 
 target/
 !.mvn/wrapper/maven-wrapper.jar
