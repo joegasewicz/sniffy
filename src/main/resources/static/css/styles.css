@@ -43,15 +43,37 @@ body {
     color: #3498db;
 }
 /* Forms */
-form {
+.form {
     padding-top: 20px;
     margin-bottom: 20px;
 }
 
-form > button {
+.form > button {
     margin-top: 20px;
     width: 100%;
 }
 .form-control {
     margin-bottom: 20px;
+}
+
+table {
+    max-width: calc(100% - 300px);
+}
+
+.th-inline-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.form-flex > select {
+    margin-right: 20px;
 }

@@ -10,11 +10,18 @@ public class ApplicationEntity {
     private String name;
     private String type;
     private String url;
+    private String status;
+    private int poleRate;
+    private String poleStatus;
 
-    public ApplicationEntity(String name, String type, String url) {
+    public ApplicationEntity(String name, String type, String url, String status, int poleRate, String poleStatus) {
         this.name = name;
         this.type = type;
         this.url = url;
+        this.status = status;
+        this.poleRate = poleRate;
+        this.poleStatus = poleStatus;
+
     }
 
     public ApplicationEntity() {
@@ -50,6 +57,30 @@ public class ApplicationEntity {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getPoleRate() {
+        return poleRate;
+    }
+
+    public void setPoleRate(int poleRate) {
+        this.poleRate = poleRate;
+    }
+
+    public String getPoleStatus() {
+        return poleStatus;
+    }
+
+    public void setPoleStatus(String poleStatus) {
+        this.poleStatus = poleStatus;
     }
 
 }

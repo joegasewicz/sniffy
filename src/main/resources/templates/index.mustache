@@ -1,6 +1,6 @@
 {{>layout/header}}
 <div class="container">
-    <table class="table">
+    <table class="table table-striped">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -13,8 +13,8 @@
         {{#applications}}
             <tr>
                 <th scope="row">{{id}}</th>
-                <th scope="row">{{name}}</th>
-                <th scope="row">{{url}}</th>
+                <th scope="row"><a href="/applications/{{id}}">{{name}}</a></th>
+                <th scope="row"><a href="{{url}}">{{url}}</a></th>
                 <th scope="row">{{type}}</th>
             </tr>
         {{/applications}}
