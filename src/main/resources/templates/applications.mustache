@@ -1,0 +1,73 @@
+{{>layout/header}}
+    <div class="container">
+        <h2>App Status:
+            {{#statusRunning}}🟢{{/statusRunning}}
+            {{^statusRunning}}🔴{{/statusRunning}}
+        </h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="row">Details</th>
+                <th scope="row">Edit</th>
+
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Name</th>
+                    <th scope="row">{{ app.name }}</th>
+                    <th scope="row"></th>
+                </tr>
+                <tr>
+                    <th scope="row">App Status</th>
+                    <th scope="row">
+                        {{#statusRunning}}🟢 {{app.status}}{{/statusRunning}}
+                        {{^statusRunning}}🔴 {{app.status}}{{/statusRunning}}
+                    </th>
+                    <th scope="row"></th>
+                </tr>
+                <tr>
+                    <th scope="row">Type</th>
+                    <th scope="row">{{ app.type }}</th>
+                    <th scope="row"></th>
+                </tr>
+                <tr>
+                    <th scope="row">URL</th>
+                    <th scope="row">{{ app.url }}</th>
+                    <th scope="row"></th>
+                </tr>
+                <tr>
+                    <th scope="row">Pole Status</th>
+                    <th scope="row">
+                        {{#poleStatusRunning}}🟢 Running{{/poleStatusRunning}}
+                        {{^poleStatusRunning}}🔴 Stopped{{/poleStatusRunning}}
+                    </th>
+                    <th scope="row">
+                        <form action="/applications/start-polling/{{ app.id }}" method="post">
+                            <button type="submit" class="btn btn-warning">Start</button>
+                        </form>
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="row">Pole Rate</th>
+                    <th scope="row">
+                        {{ poleRateTime }}
+                    </th>
+                    <th scope="row">
+                        <form class="form-flex" action="/applications/update-pole-duration/{{ app.id }}" method="post">
+                            <select class="form-select" name="poleRate" aria-label="Default select example">
+                                <option value="1">1 min</option>
+                                <option value="60">1 hr</option>
+                                <option value="1440">24 hrs</option>
+                            </select>
+                            <button type="submit" class="btn btn-info">Update</button>
+                        </form>
+                    </th>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+{{>layout/footer}}
